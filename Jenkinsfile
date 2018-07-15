@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'sudo docker build -t myapp2 .'
+                sh 'sudo docker build -t myapp2:latest .'
             }
         }
         stage('Deploy') {
