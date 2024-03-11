@@ -5,9 +5,9 @@ pipeline {
         stage('Git Checkout') {
             steps {
                 script {
-                    git branch: 'test_python',
+                    git branch: 'master',
                         credentialsId: 'rajath-my-git-pat',
-                        url: 'https://github.com/rajath-optit/flask-hello-world-devops-project.git'
+                        url: 'https://github.com/rajath-optit/python-flask-docker-hello-world.git'
                     echo "Checked out Git repository"
                 }
             }
