@@ -5,7 +5,7 @@ pipeline {
         stage('Git Checkout') {
             steps {
                 script {
-                    git branch: 'master',
+                    git branch: 'masters',
                         credentialsId: 'rajath-my-git-pat',
                         url: 'https://github.com/rajath-optit/python-flask-docker-hello-world.git'
                     echo "Checked out Git repository"
@@ -13,13 +13,13 @@ pipeline {
             }
         }
 
-        stage('Build with python') {
+        stage('Build with Python') {
             steps {
                 script {
-                    // Assuming your Gradle wrapper is in the root directory of your repository
-                    sh './app.py' // Command to execute Gradle build
+                    // Assuming your Python script is in the root directory of your repository
+                    sh 'python app.py' // Command to execute Python script
                 }
             }
-	}
-}
+        }
+    }
 }
