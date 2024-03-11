@@ -1,28 +1,25 @@
 pipeline {
     agent any
-    environment {
-        CI = 'true'
-    }
+
     stages {
-        stage('Build') {
+        stage('Git Checkout') {
             steps {
-			    sh 'sudo docker build -t myapp2:latest .'
-                sh 'sudo docker images'
                 script {
-                  docker.withRegistry('https://635019503179.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:demo-ecr-credentials') 
-				  {
-                   docker.image('hello-world').push('latest')
-                  }
+                    git branch: 'test_python',
+                        credentialsId: 'rajath-my-git-pat',
+                        url: 'https://github.com/rajath-optit/flask-hello-world-devops-project.git'
+                    echo "Checked out Git repository"
+                }
             }
         }
-		}
-		stage('Deploy') {
-		    steps {
-			    sh 'kubectl create -f eks-Deployment.yml'
-				sh 'kubectl create -f eks-Service.yml'
-				sh 'kubectl get services -o wide'
-				sh 'kubectl get pods'
+
+        stage('Build with python') {
+            steps {
+                script {
+                    // Assuming your Gradle wrapper is in the root directory of your repository
+                    sh './app.py' // Command to execute Gradle build
+                }
             }
-        }
-        }
+	}
+}
 }
